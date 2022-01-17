@@ -1,0 +1,5 @@
+#!/bin/bash
+
+gl_containerName=lazy-repo-cache
+
+docker logs -f ${gl_containerName}

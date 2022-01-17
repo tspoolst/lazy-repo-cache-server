@@ -1,0 +1,18 @@
+#!/bin/bash
+
+#[of]:function remove_existing_container {
+function remove_existing_container {
+  typeset lc_containerName
+  lc_containerName="$1"
+  docker ps -a --format {{.Names}} | grep -q ^${lc_containerName}$ && {
+    echo "stopping and removing ${lc_containerName}" >&2
+    docker stop ${lc_containerName}
+    docker rm ${lc_containerName}
+  }
+}
+#[cf]
+
+gl_basepath=$(cd ${0%/*};pwd)
+gl_containerName=lazy-repo-cache
+
+remove_existing_container ${gl_containerName}

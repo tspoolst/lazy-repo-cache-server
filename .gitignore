@@ -1,0 +1,7 @@
+*.retry
+.vagrant
+*.pyc
+.*.sw?
+ansible/files
+*.chk
+*.box
