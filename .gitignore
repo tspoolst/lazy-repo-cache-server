@@ -5,3 +5,4 @@
 ansible/files
 *.chk
 *.box
+cache
