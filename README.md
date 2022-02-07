@@ -20,7 +20,7 @@ you are going to want to install this!
 
 # Usage
 ./run-repo-cache.bsh
-* starts a caching proxy docker container, named "kp-yum-repo-cache"
+* starts a caching proxy docker container, named "lazy-repo-cache"
 ./view-cache-logs.bsh
 * tail and follows the caching proxy logs.  ctrl-c to exit.
 
