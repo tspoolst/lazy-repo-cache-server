@@ -17,13 +17,14 @@ gl_containerName=lazy-repo-cache
 
 remove_existing_container ${gl_containerName}
 
-#docker run -d --restart always \
-#  --name kp-yum-repo-cache -p 127.0.0.1:3128:3128 -p 127.0.0.1:8080:80 \
-#  -v ${gl_basepath}/nginx.conf:/etc/nginx/conf.d/default.conf:ro \
-#  -v ${gl_basepath}/cache:/usr/share/nginx/html/repo/ \
-#  nginx:1.15.8
+mkdir -p cache
+sudo chown .101 cache
+sudo chmod g+s cache
+echo "hello" > cache/repocache.txt
+
 docker run -d --restart always \
-  --name ${gl_containerName} -p 3128:3128 -p 8080:80 \
+  --name ${gl_containerName} -p 127.0.0.1:8080:80 \
   -v ${gl_basepath}/nginx.conf:/etc/nginx/conf.d/default.conf:ro \
   -v ${gl_basepath}/cache:/usr/share/nginx/html/repo/ \
   nginx:1.15.8
+#  nginx:latest
