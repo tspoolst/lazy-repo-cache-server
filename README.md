@@ -19,7 +19,7 @@ If you have a dev project that installs anything from a package repo,
 you are going to want to install this!
 
 # Usage
-./run-repo-cache.bsh
+./start-repo-cache.bsh
 * starts a caching proxy docker container, named "lazy-repo-cache"
 ./view-cache-logs.bsh
 * tail and follows the caching proxy logs.  ctrl-c to exit.

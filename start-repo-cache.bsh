@@ -18,13 +18,25 @@ gl_containerName=lazy-repo-cache
 remove_existing_container ${gl_containerName}
 
 mkdir -p cache
-sudo chown .101 cache
-sudo chmod g+s cache
+sudo chown $(id -u).101 cache -Rc
+#sudo chmod g+srwx cache -c
+sudo find cache -type d -exec chmod g+srwx {} -c \;
+sudo chmod g+rw cache/* -Rc
 echo "hello" > cache/repocache.txt
+#exit
+
+
 
 docker run -d --restart always \
-  --name ${gl_containerName} -p 8080:80 \
+  --name ${gl_containerName} \
+  -p 127.0.0.1:8080:80 \
+  $(if [[ $(uname -s) == "Linux" ]] ; then
+    if ! host_ip=$(dig +short host.docker.internal | grep .) ; then
+      host_ip=$(ip -4 addr show docker0 | grep -Po 'inet \K[\d.]+')
+    fi
+    echo "-p ${host_ip}:8080:80"
+  fi) \
   -v ${gl_basepath}/nginx.conf:/etc/nginx/conf.d/default.conf:ro \
   -v ${gl_basepath}/cache:/usr/share/nginx/html/repo/ \
-  nginx:1.15.8
+  nginx:1.15.8 nginx-debug -g 'daemon off;'
 #  nginx:latest
